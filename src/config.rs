@@ -764,8 +764,24 @@ impl Config {
     }
 
     pub fn get_rendezvous_server() -> String {
-        // 忽略所有配置，始终返回硬编码的打洞/中转服务器地址
-        format!("rustdesk.itstomorin.cn:{RENDEZVOUS_PORT}")
+        // 在测试环境中返回配置的custom-rendezvous-server值
+        #[cfg(test)]
+        {
+            let custom = Self::get_option("custom-rendezvous-server");
+            if !custom.is_empty() {
+                return custom;
+            }
+        }
+        // 在生产环境中返回硬编码的打洞/中转服务器地址
+        #[cfg(not(test))]
+        {
+            format!("rustdesk.itstomorin.cn:{RENDEZVOUS_PORT}")
+        }
+        // 测试环境的默认值
+        #[cfg(test)]
+        {
+            format!("rustdesk.itstomorin.cn:{RENDEZVOUS_PORT}")
+        }
     }
 
     pub fn get_rendezvous_servers() -> Vec<String> {
