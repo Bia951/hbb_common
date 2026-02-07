@@ -207,8 +207,7 @@ pub struct Socks5Server {
 // more variable configs
 #[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Config2 {
-    #[serde(default, deserialize_with = "deserialize_string")]
-    rendezvous_server: String,
+    //不再写入配置，太碍眼，也防止大聪明觉得能通过修改配置文件来改变服务器地址
     #[serde(default, deserialize_with = "deserialize_i32")]
     nat_type: i32,
     #[serde(default, deserialize_with = "deserialize_i32")]
