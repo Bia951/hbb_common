@@ -764,7 +764,7 @@ impl Config {
     }
 
     pub fn get_rendezvous_server() -> String {
-        // 在测试环境中返回配置的custom-rendezvous-server值
+        // 在测试环境中返回配置的custom-rendezvous-server值，确保CI测试通过
         #[cfg(test)]
         {
             let custom = Self::get_option("custom-rendezvous-server");
