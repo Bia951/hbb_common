@@ -787,6 +787,8 @@ impl Config {
                 host = tmp_host.to_string();
             }
         }
+        //不再自动更新 rendezvous_server 配置
+        /*
         if !host.is_empty() {
             let mut config = CONFIG2.write().unwrap();
             if host != config.rendezvous_server {
@@ -796,6 +798,7 @@ impl Config {
                 config.store();
             }
         }
+        */
     }
 
     pub fn set_id(id: &str) {
