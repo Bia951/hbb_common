@@ -779,26 +779,7 @@ impl Config {
 
     pub fn update_latency(host: &str, latency: i64) {
         ONLINE.lock().unwrap().insert(host.to_owned(), latency);
-        let mut host = "".to_owned();
-        let mut delay = i64::MAX;
-        for (tmp_host, tmp_delay) in ONLINE.lock().unwrap().iter() {
-            if tmp_delay > &0 && tmp_delay < &delay {
-                delay = *tmp_delay;
-                host = tmp_host.to_string();
-            }
-        }
-        //不再自动更新 rendezvous_server 配置
-        /*
-        if !host.is_empty() {
-            let mut config = CONFIG2.write().unwrap();
-            if host != config.rendezvous_server {
-                log::debug!("Update rendezvous_server in config to {}", host);
-                log::debug!("{:?}", *ONLINE.lock().unwrap());
-                config.rendezvous_server = host;
-                config.store();
-            }
-        }
-        */
+        //地址已硬编码，不再需要自动更新配置
     }
 
     pub fn set_id(id: &str) {
@@ -1047,6 +1028,19 @@ impl Config {
     }
 
     pub fn set_option(k: String, v: String) {
+
+        //防止修改服务器地址
+        const PROTECTED_OPTIONS: &[&str] = &[
+        "custom-rendezvous-server",
+        "relay-server",
+        "api-server",
+        ];
+        if PROTECTED_OPTIONS.contains(&k.as_str()) {
+            log::warn!("Blocked attempt to modify protected option '{}' to '{}'", k, v);
+            return;
+        }
+
+
         if !is_option_can_save(&OVERWRITE_SETTINGS, &k, &DEFAULT_SETTINGS, &v) {
             let mut config = CONFIG2.write().unwrap();
             if config.options.remove(&k).is_some() {
@@ -1855,6 +1849,19 @@ impl LocalConfig {
     }
 
     pub fn set_option(k: String, v: String) {
+
+        //防止修改服务器地址
+        const PROTECTED_OPTIONS: &[&str] = &[
+        "custom-rendezvous-server",
+        "relay-server",
+        "api-server",
+        ];
+        if PROTECTED_OPTIONS.contains(&k.as_str()) {
+            log::warn!("Blocked attempt to modify protected option '{}' to '{}'", k, v);
+            return;
+        }
+
+        
         if !is_option_can_save(&OVERWRITE_LOCAL_SETTINGS, &k, &DEFAULT_LOCAL_SETTINGS, &v) {
             let mut config = LOCAL_CONFIG.write().unwrap();
             if config.options.remove(&k).is_some() {
