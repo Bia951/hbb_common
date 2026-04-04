@@ -156,8 +156,20 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-pub const RENDEZVOUS_SERVERS: &[&str] = &["rustdesk.itstomorin.cn"];
-pub const RS_PUB_KEY: &str = "hrPrVtYmAHGReIR552swYsGny0kreUNfppUfHb9M4m8=";
+pub const SERVER_PROVIDER_OFFICIAL: &str = "official";
+pub const SERVER_PROVIDER_WAYDESK: &str = "waydesk";
+pub const SERVER_PROVIDER_CUSTOM: &str = "custom";
+
+pub const OFFICIAL_RENDEZVOUS_SERVER: &str = "rs-ny.rustdesk.com";
+pub const OFFICIAL_API_SERVER: &str = "https://admin.rustdesk.com";
+pub const OFFICIAL_PUB_KEY: &str = "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
+
+pub const WAYDESK_RENDEZVOUS_SERVER: &str = "rustdesk.itstomorin.cn";
+pub const WAYDESK_API_SERVER: &str = "https://rustdesk.itstomorin.cn";
+pub const WAYDESK_PUB_KEY: &str = "hrPrVtYmAHGReIR552swYsGny0kreUNfppUfHb9M4m8=";
+
+pub const RENDEZVOUS_SERVERS: &[&str] = &[WAYDESK_RENDEZVOUS_SERVER];
+pub const RS_PUB_KEY: &str = WAYDESK_PUB_KEY;
 
 pub const RENDEZVOUS_PORT: i32 = 21116;
 pub const RELAY_PORT: i32 = 21117;
@@ -2824,7 +2836,12 @@ pub mod keys {
     pub const OPTION_APPROVE_MODE: &str = "approve-mode";
     pub const OPTION_VERIFICATION_METHOD: &str = "verification-method";
     pub const OPTION_TEMPORARY_PASSWORD_LENGTH: &str = "temporary-password-length";
+    pub const OPTION_SERVER_PROVIDER: &str = "server-provider";
     pub const OPTION_CUSTOM_RENDEZVOUS_SERVER: &str = "custom-rendezvous-server";
+    pub const OPTION_CUSTOM_SERVER_ID: &str = "custom-server-id";
+    pub const OPTION_CUSTOM_SERVER_RELAY: &str = "custom-server-relay";
+    pub const OPTION_CUSTOM_SERVER_API: &str = "custom-server-api";
+    pub const OPTION_CUSTOM_SERVER_KEY: &str = "custom-server-key";
     pub const OPTION_API_SERVER: &str = "api-server";
     pub const OPTION_KEY: &str = "key";
     pub const OPTION_ALLOW_WEBSOCKET: &str = "allow-websocket";
@@ -2843,7 +2860,6 @@ pub mod keys {
     pub const OPTION_AV1_TEST: &str = "av1-test";
     pub const OPTION_TRACKPAD_SPEED: &str = "trackpad-speed";
     pub const OPTION_REGISTER_DEVICE: &str = "register-device";
-    pub const OPTION_SERVER_PROVIDER: &str = "server-provider";
     pub const OPTION_RELAY_SERVER: &str = "relay-server";
     pub const OPTION_ICE_SERVERS: &str = "ice-servers";
     /// Maximum number of files allowed during a single file transfer request.
@@ -3049,10 +3065,15 @@ pub mod keys {
         OPTION_APPROVE_MODE,
         OPTION_VERIFICATION_METHOD,
         OPTION_TEMPORARY_PASSWORD_LENGTH,
+        OPTION_SERVER_PROVIDER,
         OPTION_PROXY_URL,
         OPTION_PROXY_USERNAME,
         OPTION_PROXY_PASSWORD,
         OPTION_CUSTOM_RENDEZVOUS_SERVER,
+        OPTION_CUSTOM_SERVER_ID,
+        OPTION_CUSTOM_SERVER_RELAY,
+        OPTION_CUSTOM_SERVER_API,
+        OPTION_CUSTOM_SERVER_KEY,
         OPTION_API_SERVER,
         OPTION_KEY,
         OPTION_ALLOW_WEBSOCKET,
